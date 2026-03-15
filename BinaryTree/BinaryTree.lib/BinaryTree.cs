@@ -1,113 +1,127 @@
 ﻿namespace BinaryTree.lib;
-
 public class BinaryTree
 {
-    BinaryTreeNode? _root;
+    private Node? _root;
 
     public BinaryTree()
     {
         _root = null;
     }
 
-    public BinaryTree(int v)
+    public BinaryTree(int value)
     {
-        _root = new BinaryTreeNode(v);
+        _root = new Node(value);
     }
 
     public BinaryTree(IList<int> values) : this()
     {
-        foreach (int v in values)
-            Insert(v);
+        foreach (int value in values)
+            Insert(value);
     }
 
     public void Insert(int value)
     {
         if (_root == null)
-            _root = new BinaryTreeNode(value);
+            _root = new Node(value);
         else
             _root.Insert(value);
     }
 
-    public int Count => _root == null ? 0 : _root.Count;
-    public int Sum => _root == null ? 0 : _root.Sum;
-}
-
-    internal BinaryTreeNode(int v)
+    public bool Contains(int value)
     {
-        _value = v;
-        _next = null;
-    }
-    internal BinaryTreeNode(int v, BinaryTreeNode? ptr)
-    {
-        _value = v;
-        _next = ptr;
-    }
-}
-
-public class BinaryTreeNode
-{
-    int _value;
-    BinaryTreeNode? _next;
-
-    internal int Value => _value;
-    internal BinaryTreeNode? Next => _next;
-    internal int Count => _next == null ? 1 : 1 + _next.Count;
-            
-    internal int Sum => _next == null ? _value : _value + _next.Sum;
-
-
-    internal BinaryTreeNode(int v)
-    {
-        _value = v;
-        _next = null;
-    }
-    internal BinaryTreeNode(int v, BinaryTreeNode? ptr) 
-    {
-        _value = v;
-        _next = ptr;
+        return _root != null && _root.Contains(value);
     }
 
-    public int Count => _head == null ? 0 : _head.Count;
-    public int Sum => _head == null ? 0 : _head.Sum;
-
-    public void Insert(int value)
+    public int Sum
     {
-        if (_root == null)
-            _root = new BinaryTreeNode(value);
-        else
-            _root.Insert(value);
-
-
-        if (value == Value)
-            return; 
-
-
-        if (value < Value)
+        get
         {
-            if (Left == null)
-                Left = new BinaryTreeNode(value);
+            if (_root == null)
+                return 0;
             else
-                Left.Insert(value);
-        }
-        else
-        {
-            if (Right == null)
-                Right = new BinaryTreeNode(value);
-            else
-                Right.Insert(value);
+                return _root.Sum;
         }
     }
 
-    public void checkDupes(BinaryTreeNode T, int value)
+    public override string ToString()
     {
-        for(int i =0; i<T.length; i++)
-        {
-            if(T[i] == value)
-                return T;
-            else if(_head> value)
+        return _root == null ? string.Empty : _root.ToInOrderString();
+    }
 
-            
+    internal class Node
+    {
+        private int _value;
+        private Node? _left;
+        private Node? _right;
+
+        internal Node(int value)
+        {
+            _value = value;
+            _left = null;
+            _right = null;
+        }
+
+        internal void Insert(int value)
+        {
+            if (value == _value)
+                return;
+
+            if (value < _value)
+            {
+                if (_left == null)
+                    _left = new Node(value);
+                else
+                    _left.Insert(value);
+            }
+            else
+            {
+                if (_right == null)
+                    _right = new Node(value);
+                else
+                    _right.Insert(value);
+            }
+        }
+
+        internal bool Contains(int value)
+        {
+            if (value == _value)
+                return true;
+
+            if (value < _value)
+                return _left != null && _left.Contains(value);
+
+            return _right != null && _right.Contains(value);
+        }
+
+        internal int Sum
+        {
+            get
+            {
+                int leftSum = _left == null ? 0 : _left.Sum;
+                int rightSum = _right == null ? 0 : _right.Sum;
+                return leftSum + _value + rightSum;
+            }
+        }
+
+        internal string ToInOrderString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            if (_left != null)
+                sb.Append(_left.ToInOrderString());
+
+            if (sb.Length > 0)
+                sb.Append(' ');
+
+            sb.Append(_value);
+
+            if (_right != null)
+            {
+                sb.Append(' ');
+                sb.Append(_right.ToInOrderString());
+            }
+
+            return sb.ToString();
         }
     }
-    }
-
+}
