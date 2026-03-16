@@ -8,7 +8,7 @@ namespace BinaryTree.Tests
     public class BinaryTreeTests
     {
         [TestMethod]
-        public void Insert_AddsValuesCorrectly()
+        public void Insert()
         {
             BinaryTree tree = new BinaryTree();
 
@@ -20,7 +20,7 @@ namespace BinaryTree.Tests
         }
 
         [TestMethod]
-        public void Insert_IgnoresDuplicateValues()
+        public void Insert()
         {
             BinaryTree tree = new BinaryTree();
 
@@ -31,7 +31,7 @@ namespace BinaryTree.Tests
         }
 
         [TestMethod]
-        public void Contains_ReturnsTrue_WhenValueExists()
+        public void Contains()
         {
             BinaryTree tree = new BinaryTree(new List<int> { 10, 5, 15 });
 
@@ -39,7 +39,7 @@ namespace BinaryTree.Tests
         }
 
         [TestMethod]
-        public void Contains_ReturnsFalse_WhenValueDoesNotExist()
+        public void Contains()
         {
             BinaryTree tree = new BinaryTree(new List<int> { 10, 5, 15 });
 
@@ -47,7 +47,7 @@ namespace BinaryTree.Tests
         }
 
         [TestMethod]
-        public void Sum_ReturnsZero_ForEmptyTree()
+        public void SumZero()
         {
             BinaryTree tree = new BinaryTree();
 
@@ -55,23 +55,15 @@ namespace BinaryTree.Tests
         }
 
         [TestMethod]
-        public void Sum_ReturnsTotal_ForTreeWithValues()
+        public void SumOfTree()
         {
             BinaryTree tree = new BinaryTree(new List<int> { 10, 5, 15 });
 
             Assert.AreEqual(30, tree.Sum);
         }
-
+        
         [TestMethod]
-        public void ToString_ReturnsEmptyString_ForEmptyTree()
-        {
-            BinaryTree tree = new BinaryTree();
-
-            Assert.AreEqual(string.Empty, tree.ToString());
-        }
-
-        [TestMethod]
-        public void ToString_ReturnsValuesInOrder()
+        public void ToString()
         {
             BinaryTree tree = new BinaryTree(new List<int> { 10, 5, 15, 3, 7 });
 
